@@ -26,7 +26,7 @@ std = [0.229, 0.224, 0.225]
 feature_extractor = vgg.VGG19()
 
 input_root = os.path.join(args.dataset_path,'train','train_A')
-mask_root = os.path.join(args.dataset_path,'train','train_shadow')
+mask_root = os.path.join(args.dataset_path,'train','train_B')
 gt_root = os.path.join(args.dataset_path,'train','train_C')
 
 input_dataset_root = []
