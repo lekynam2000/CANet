@@ -19,6 +19,9 @@ parser.add_argument('--dataset-path',type=str,default='ISTD_Dataset')
 parser.add_argument('--save-path',type=str,default='gen')
 args = parser.parse_args()
 
+def ps(t,name):
+    print(f"{name}_size: {t}")
+
 eps = 1e-8
 mean = [0.485, 0.456, 0.406]
 std = [0.229, 0.224, 0.225]
@@ -54,7 +57,7 @@ value2 = 0
 value3 = 0
 value4 = 0
 
-for i in range(len(input_dataset_root)):
+for i in range(2):
     image = Image.open(input_dataset_root[i]).convert('RGB').resize((416, 416))
     mask = Image.open(mask_dataset_root[i]).convert('L').resize((416, 416))
     gt = Image.open(gt_dataset_root[i]).convert('RGB').resize((416, 416))
@@ -83,17 +86,35 @@ for i in range(len(input_dataset_root)):
                 shadow_feature.append(np.zeros(2048).astype(np.float32))
 
     features = torch.from_numpy(np.array(features))                                       # 169 2048
-    non_shadow_feature = torch.from_numpy(np.array(non_shadow_feature).transpose(1, 0))   # 2048 169
+    non_shadow_feature = torch.from_numpy(np.array(non_shadow_feature).transpose(1, 0))   # 2048 169    
     shadow_feature = torch.from_numpy(np.array(shadow_feature).transpose(1, 0))   # 2048 169
+    
+    print("Step 1")
+    ps(features,"features")
+    ps(non_shadow_feature,"non_shadow_feature")
+    ps(shadow_feature,"shadow_feature")
 
     features = (features / (features.norm(dim=1, keepdim=True) + eps)).unsqueeze(dim=0)
     non_shadow_feature = (non_shadow_feature / (non_shadow_feature.norm(dim=0, keepdim=True) + eps)).unsqueeze(dim=0)
     shadow_feature = (shadow_feature / (shadow_feature.norm(dim=0, keepdim=True) + eps)).unsqueeze(dim=0)
 
+    print("Step 2")
+    ps(features,"features")
+    ps(non_shadow_feature,"non_shadow_feature")
+    ps(shadow_feature,"shadow_feature")
+
     correlation = torch.bmm(features, non_shadow_feature)                                 # 169 169
     correlation, indexes = torch.sort(correlation, dim=2, descending=True)
     correlation2 = torch.bmm(features, shadow_feature)                                    # 169 169
     correlation2, indexes2 = torch.sort(correlation2, dim=2, descending=True)
+
+    print("Step 3")
+    ps(correlation,"correlation")
+    ps(indexes,"indexes")
+    ps(correlation2,"correlation2")
+    ps(indexes2,"indexes2")
+
+
     # for j in range(144):
     #     if is_shadow[j] == 1:
     #         print(correlation[0, j])
