@@ -212,7 +212,8 @@ generated_dataset_shadow2non_non_match = np.array(generated_dataset_shadow2non_n
 generated_dataset_non2shaodw_non_match = np.array(generated_dataset_non2shaodw_non_match)
 generated_dataset_shadow2shadow_non_match = np.array(generated_dataset_shadow2shadow_non_match)
 
-os.makedirs(args.save_path)
+if not os.path.exists(args.save_path):
+    os.makedirs(args.save_path)
 with open(os.path.join(args.save_path,"generated_dataset_shadow2non_match.pt"), 'wb') as f:
     torch.save(generated_dataset_shadow2non_match, f)
 
