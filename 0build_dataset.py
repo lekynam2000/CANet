@@ -54,7 +54,7 @@ value2 = 0
 value3 = 0
 value4 = 0
 
-for i in range(2):
+for i in range(len(input_dataset_root)):
     image = Image.open(input_dataset_root[i]).convert('RGB').resize((416, 416))
     mask = Image.open(mask_dataset_root[i]).convert('L').resize((416, 416))
     gt = Image.open(gt_dataset_root[i]).convert('RGB').resize((416, 416))
