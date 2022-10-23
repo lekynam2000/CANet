@@ -16,7 +16,7 @@ import vgg
 
 parser = argparse.ArgumentParser(description='Build dataset')
 parser.add_argument('--dataset-path',type=str,default='ISTD_Dataset')
-parser.add_argument('--save-path',type='str',default='gen')
+parser.add_argument('--save-path',type=str,default='gen')
 args = parser.parse_args()
 
 eps = 1e-8
