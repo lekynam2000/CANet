@@ -3,11 +3,15 @@ import numpy as np
 import cv2
 import glob
 import os
+import argparse
 
+parser = argparse.ArgumentParser(description='Light average')
+parser.add_argument('--dataset-path',type=str,default='ISTD_Dataset')
+args = parser.parse_args()
 
 def make_dataset():
     dataset = []
-    original_img_rpath = 'F:/ISTD_Dataset/train/train_A'
+    original_img_rpath = os.path.join(args.dataset_path,"train","train_A")
     for img_path in glob.glob(os.path.join(original_img_rpath, '*.png')):
         basename = os.path.basename(img_path)
         original_img_path = os.path.join(original_img_rpath, basename)
@@ -87,4 +91,4 @@ for k in range(len(Input)):
     image = cv2.cvtColor(image, cv2.COLOR_LAB2RGB) * 255.0
 
     image = Image.fromarray(np.uint8(image))
-    image.save(os.path.join('F:/ISTD_Dataset/new_test2/', os.path.basename(name)))
+    image.save(os.path.join(args.dataset_path,'new_test2', os.path.basename(name)))
