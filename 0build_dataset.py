@@ -20,7 +20,7 @@ parser.add_argument('--save-path',type=str,default='gen')
 args = parser.parse_args()
 
 def ps(t,name):
-    print(f"{name}_size: {t}")
+    print(f"{name}_size: {t.size()}")
 
 eps = 1e-8
 mean = [0.485, 0.456, 0.406]
