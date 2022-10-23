@@ -103,9 +103,9 @@ for i in range(2):
     ps(non_shadow_feature,"non_shadow_feature")
     ps(shadow_feature,"shadow_feature")
 
-    correlation = torch.bmm(features, non_shadow_feature)                                 # 169 169
+    correlation = torch.bmm(features, non_shadow_feature)                                 # 1 169 169
     correlation, indexes = torch.sort(correlation, dim=2, descending=True)
-    correlation2 = torch.bmm(features, shadow_feature)                                    # 169 169
+    correlation2 = torch.bmm(features, shadow_feature)                                    # 1 169 169
     correlation2, indexes2 = torch.sort(correlation2, dim=2, descending=True)
 
     print("Step 3")
