@@ -57,6 +57,9 @@ def reduce_avg_channel(image, x, y, r, avg, c):
 
 
 Input = make_dataset()
+save_dir=os.path.join(args.dataset_path,'new_test2')
+if not os.path.exists(save_dir):
+    os.makedirs(save_dir)
 for k in range(len(Input)):
     name = Input[k]
     print(k)
@@ -91,4 +94,4 @@ for k in range(len(Input)):
     image = cv2.cvtColor(image, cv2.COLOR_LAB2RGB) * 255.0
 
     image = Image.fromarray(np.uint8(image))
-    image.save(os.path.join(args.dataset_path,'new_test2', os.path.basename(name)))
+    image.save(os.path.join(save_dir, os.path.basename(name)))
