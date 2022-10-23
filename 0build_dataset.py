@@ -84,7 +84,7 @@ for i in range(len(input_dataset_root)):
 
     features = torch.from_numpy(np.array(features))                                       # 169 2048
     non_shadow_feature = torch.from_numpy(np.array(non_shadow_feature).transpose(1, 0))   # 2048 169
-    shadow_feature = torch.from_numpy(np.array(shadow_feature).transpose(1, 0))   # 2048 144
+    shadow_feature = torch.from_numpy(np.array(shadow_feature).transpose(1, 0))   # 2048 169
 
     features = (features / (features.norm(dim=1, keepdim=True) + eps)).unsqueeze(dim=0)
     non_shadow_feature = (non_shadow_feature / (non_shadow_feature.norm(dim=0, keepdim=True) + eps)).unsqueeze(dim=0)
