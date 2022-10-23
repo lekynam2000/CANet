@@ -1,4 +1,5 @@
 import os
+import argparse
 import glob
 import random
 import errno
@@ -12,15 +13,21 @@ from torchvision import transforms
 import cv2
 import vgg
 
+
+parser = argparse.ArgumentParser(description='Build dataset')
+parser.add_argument('--dataset-path',type=str,default='ISTD_Dataset')
+parser.add_argument('--save-path',type='str',default='gen')
+args = parser.parse_args()
+
 eps = 1e-8
 mean = [0.485, 0.456, 0.406]
 std = [0.229, 0.224, 0.225]
 
 feature_extractor = vgg.VGG19()
 
-input_root = "F:/ISTD_Dataset/train/train_A/"
-mask_root = "F:/ISTD_Dataset/train/train_shadow/"
-gt_root = "F:/ISTD_Dataset/train/train_C/"
+input_root = os.path.join(args.dataset_path,'train','train_A')
+mask_root = os.path.join(args.dataset_path,'train','train_shadow')
+gt_root = os.path.join(args.dataset_path,'train','train_C')
 
 input_dataset_root = []
 mask_dataset_root = []
@@ -184,22 +191,22 @@ generated_dataset_shadow2non_non_match = np.array(generated_dataset_shadow2non_n
 generated_dataset_non2shaodw_non_match = np.array(generated_dataset_non2shaodw_non_match)
 generated_dataset_shadow2shadow_non_match = np.array(generated_dataset_shadow2shadow_non_match)
 
-with open("E:/generated_dataset_shadow2non_match.pt", 'wb') as f:
+with open(os.path.join(args.save_path,"generated_dataset_shadow2non_match.pt"), 'wb') as f:
     torch.save(generated_dataset_shadow2non_match, f)
 
-with open("E:/generated_dataset_non2shaodw_match.pt", 'wb') as f:
+with open(os.path.join(args.save_path,"generated_dataset_non2shaodw_match.pt"), 'wb') as f:
     torch.save(generated_dataset_non2shaodw_match, f)
 
-with open("E:/generated_dataset_shadow2shadow_match.pt", 'wb') as f:
+with open(os.path.join(args.save_path,"generated_dataset_shadow2shadow_match.pt"), 'wb') as f:
     torch.save(generated_dataset_shadow2shadow_match, f)
 
-with open("E:/generated_dataset_shadow2non_non_match.pt", 'wb') as f:
+with open(os.path.join(args.save_path,"generated_dataset_shadow2non_non_match.pt"), 'wb') as f:
     torch.save(generated_dataset_shadow2non_non_match, f)
 
-with open("E:/generated_dataset_non2shaodw_non_match.pt", 'wb') as f:
+with open(os.path.join(args.save_path,"generated_dataset_non2shaodw_non_match.pt"), 'wb') as f:
     torch.save(generated_dataset_non2shaodw_non_match, f)
 
-with open("E:/generated_dataset_shadow2shadow_non_match.pt", 'wb') as f:
+with open(os.path.join(args.save_path,"generated_dataset_shadow2shadow_non_match.pt"), 'wb') as f:
     torch.save(generated_dataset_shadow2shadow_non_match, f)
 
 
